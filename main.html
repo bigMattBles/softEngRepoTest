@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnamen</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="main-body">
+    <header>
+        <h1>Choose Tournament</h1>
+    </header>
+    <main>
+        <section class="games">
+            <h2>Pilih Game</h2>
+            <div class="game-grid">
+                <div class="game" data-game="Valorant">
+                <a href="tournament.html"><img src="Assets/valorant-logo-FAB2CA0E55-seeklogo.com.png" alt="Valorant"></a>
+                    <p>Valorant</p>
+                </div>
+                <div class="game" data-game="Cooking Mama">
+                <a href="tournament.html"><img src="Assets/images.jpeg" alt="Cooking Mama"></a>
+                    <p>Cooking Mama</p>
+                </div>
+                <!-- Tambahkan lebih banyak game sesuai kebutuhan -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+    document.querySelectorAll('.game').forEach(game => 
+    {
+        game.addEventListener('click', function() 
+        {
+            const selectedGame = game.getAttribute('data-game');
+            localStorage.setItem('selectedGame', selectedGame);
+            window.location.href = 'tournament.html';
+        });
+    });
+    </script>
+</body>
+</html>

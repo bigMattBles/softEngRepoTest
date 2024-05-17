@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Turnamen</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="login-body">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" name="loginEmail" required>
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="loginPassword" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Belum punya akun? <a href="#" id="createAccountLink">Buat akun</a></p>
+        <form id="createAccountForm" style="display:none;">
+            <h2>Buat Akun Baru</h2>
+            <label for="newName">Nama:</label>
+            <input type="text" id="newName" name="newName" required>
+            <label for="newEmail">Email:</label>
+            <input type="email" id="newEmail" name="newEmail" required>
+            <label for="newPassword">Password:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+            <button type="submit">Buat Akun</button>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) 
+    {
+        event.preventDefault();
+
+        const loginEmail = document.getElementById('loginEmail').value;
+        const loginPassword = document.getElementById('loginPassword').value;
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        const user = users.find(user => user.email === loginEmail && user.password === loginPassword);
+
+        if (user)
+        {
+            alert(`Selamat datang, ${user.name}!`);
+            window.location.href = 'main.html';
+        } 
+        else 
+        {
+            alert('Email atau password salah!');
+        }
+
+        document.getElementById('loginForm').reset();
+    });
+
+    document.getElementById('createAccountLink').addEventListener('click', function(event) 
+    {
+        event.preventDefault();
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('createAccountForm').style.display = 'block';
+    });
+
+
+    document.getElementById('createAccountForm').addEventListener('submit', function(event) 
+    {
+        event.preventDefault();
+
+        const newName = document.getElementById('newName').value;
+        const newEmail = document.getElementById('newEmail').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        const user = 
+        {
+            name: newName,
+            email: newEmail,
+            password: newPassword
+        };
+
+    if(!localStorage.getItem('users')) 
+    {
+        localStorage.setItem('users', JSON.stringify([]));
+    }
+
+    const users = JSON.parse(localStorage.getItem('users'));
+    users.push(user);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert('Akun berhasil dibuat! Silakan login.');
+    document.getElementById('createAccountForm').reset();
+    document.getElementById('createAccountForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+});
+
+    </script>
+</body>
+</html>
